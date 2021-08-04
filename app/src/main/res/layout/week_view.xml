@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".WeekView">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/home"
+            android:layout_width="1dp"
+            android:layout_height="35dp"
+            android:layout_weight=".4"
+            android:background="@drawable/calendar"
+            android:onClick="viewCalendar"
+            tools:layout_editor_absoluteX="194dp"
+            tools:layout_editor_absoluteY="239dp" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/app_name"
+            android:textSize="24sp"
+            android:textColor="@color/blackColor"
+            android:onClick="logout"/>
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/setting"
+            android:layout_width="5dp"
+            android:layout_height="40dp"
+            android:layout_weight=".3"
+            android:background="@drawable/refresh"
+            android:onClick="getHttp"
+            tools:layout_editor_absoluteX="194dp"
+            tools:layout_editor_absoluteY="239dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20sp"
+        android:orientation="horizontal">
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:fontFamily="@font/montserrat_bold"-->
+            <!--android:text="\u003C"-->
+            <!--android:textSize="24sp"-->
+            <!--android:textColor="@color/blackColor"/>-->
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/curr_month"
+            android:textColor="@color/blackColor"
+            android:textSize="20sp" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:fontFamily="@font/montserrat_bold"-->
+            <!--android:text="\u003E"-->
+            <!--android:textSize="24sp"-->
+            <!--android:textColor="@color/blackColor"/>-->
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
+        android:orientation="horizontal">
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <TextView
+            style="@style/DayOfWeekStyle"
+            android:text="S"
+            />/>
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <TextView
+            style="@style/DayOfWeekStyle"
+            android:text="M" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <TextView
+            style="@style/DayOfWeekStyle"
+            android:text="Tu" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <TextView
+            style="@style/DayOfWeekStyle"
+            android:text="W" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <TextView
+            style="@style/DayOfWeekStyle"
+            android:text="Th" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <TextView
+            style="@style/DayOfWeekStyle"
+            android:text="F" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <TextView
+            style="@style/DayOfWeekStyle"
+            android:text="S" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <!--<GridView xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--android:id="@+id/gridview"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="200dp"-->
+        <!--android:columnWidth="90dp"-->
+        <!--android:numColumns="7"-->
+        <!--android:verticalSpacing="10dp"-->
+        <!--android:horizontalSpacing="5dp"-->
+        <!--android:stretchMode="columnWidth"-->
+        <!--android:gravity="center"-->
+        <!--/>-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
+        android:orientation="horizontal">
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/Sunday_AM"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/box" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/Monday_AM"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/box" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/Tuesday_AM"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/box" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/Wednesday_AM"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/box" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/Thursday_AM"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/box" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/Friday_AM"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/box" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/Saturday_AM"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/box" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
+        android:orientation="horizontal">
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/Sunday_PM"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/box" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/Monday_PM"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/box" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/Tuesday_PM"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/box" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/Wednesday_PM"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/box" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/Thursday_PM"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/box" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/Friday_PM"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/box" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/Saturday_PM"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/box" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50sp"
+        android:layout_marginBottom="-50sp"
+        android:background="@drawable/layout_bg"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/patient"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20sp"
+                android:layout_marginLeft="20sp"
+                android:fontFamily="@font/quicksand_medium"
+                android:text="@string/patient_title"
+                android:textSize="24sp"
+                android:textColor="@color/whiteColor"/>
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginLeft="20sp"
+                android:fontFamily="@font/quicksand_medium"
+                android:text="@string/status_title"
+                android:textSize="45sp"
+                android:textColor="@color/whiteColor"/>
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="5dp"
+                android:layout_weight="1"
+                android:textColor="@color/whiteColor"/>
+            <TextView
+                android:id="@+id/am"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:fontFamily="@font/quicksand_medium"
+                android:text="@string/am_title"
+                android:textSize="24sp"
+                android:textColor="@color/whiteColor"/>
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="10dp"
+                android:layout_weight="1" />
+            <TextView
+                android:id="@+id/pm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:fontFamily="@font/quicksand_medium"
+                android:text="@string/pm_title"
+                android:textSize="24sp"
+                android:textColor="@color/whiteColor"/>
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="10dp"
+                android:layout_weight="1" />
+            <TextView
+                android:id="@+id/notes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:fontFamily="@font/quicksand_medium"
+                android:text="@string/notes_title"
+                android:textSize="24sp"
+                android:textColor="@color/whiteColor"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
