@@ -10,17 +10,16 @@ Our PillMinder app always monitors the pillbox which contains the medicines orga
 ## The Five Ws
 ![alt text](https://github.com/rajputpravin/pillminder/blob/master/artifacts/FiveWhys.PNG?raw=true)
 
-![alt text](https://github.com/rajputpravin/pillminder/blob/master/artifacts/WeekCalendarView.PNG?raw=true)
-
+## Basics
 ![alt text](https://github.com/rajputpravin/pillminder/blob/master/artifacts/architectureDiag.PNG?raw=true)
 
-![alt text](https://github.com/rajputpravin/pillminder/blob/master/artifacts/emptyPillBox.PNG?raw=true)
-
-![alt text](https://github.com/rajputpravin/pillminder/blob/master/artifacts/filledPillBox.PNG?raw=true)
-
+## Screenshots
 ![alt text](https://github.com/rajputpravin/pillminder/blob/master/artifacts/login.PNG?raw=true)
-
+![alt text](https://github.com/rajputpravin/pillminder/blob/master/artifacts/emptyPillBox.PNG?raw=true)
+![alt text](https://github.com/rajputpravin/pillminder/blob/master/artifacts/filledPillBox.PNG?raw=true)
+![alt text](https://github.com/rajputpravin/pillminder/blob/master/artifacts/WeekCalendarView.PNG?raw=true)
 ![alt text](https://github.com/rajputpravin/pillminder/blob/master/artifacts/pullUpNotification.PNG?raw=true)
-
 ![alt text](https://github.com/rajputpravin/pillminder/blob/master/artifacts/sideMenuView.PNG?raw=true)
+
+
 
