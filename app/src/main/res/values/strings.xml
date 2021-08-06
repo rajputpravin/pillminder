@@ -18,8 +18,8 @@
 
     <string name="login_title">Login</string>
 
-    <string name="curr_month">April 2018</string>
-    <string name="curr_date">Sunday, April 7th</string>
+    <string name="curr_month">1st Week, Aug 2021</string>
+    <string name="curr_date">Sunday, August 6th</string>
 
     <string name="username">\Username: </string>
     <string name="password">\Password: </string>
