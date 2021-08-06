@@ -9,8 +9,13 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.minder.pillminder.utils.GenericCalendarUtils;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.sql.Date;
+import java.util.Calendar;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -18,7 +23,7 @@ import okhttp3.Response;
 
 public class WeekView extends AppCompatActivity {
 
-    TextView patientView, statusView, amView, pmView, notesView;
+    TextView patientView, recordDateView, statusView, amView, pmView, notesView;
     TextView Sunday_AM, Monday_AM, Tuesday_AM, Wednesday_AM, Thursday_AM, Friday_AM, Saturday_AM;
     TextView Sunday_PM, Monday_PM, Tuesday_PM, Wednesday_PM, Thursday_PM, Friday_PM, Saturday_PM;
 
@@ -27,6 +32,7 @@ public class WeekView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.week_view);
         patientView = (TextView) findViewById(R.id.patient);
+        recordDateView = (TextView) findViewById(R.id.recordDate);
         statusView = (TextView) findViewById(R.id.status);
         amView = (TextView) findViewById(R.id.am);
         pmView = (TextView) findViewById(R.id.pm);
@@ -83,31 +89,42 @@ public class WeekView extends AppCompatActivity {
         try {
             OkHttpClient client = new OkHttpClient();
 
-            String url = "https://webhooks.mongodb-stitch.com/api/client/v2.0/app/pillbugapp-ylegd/service/addSchedule/incoming_webhook/getSchedule?secret=panda";
+            String patientName = "Jack";
+            Calendar cal = Calendar.getInstance();
+            Date recordDate = new Date(cal.getTime().getTime());
+            String week = GenericCalendarUtils.getWeek(recordDate);
 
-            Request request = new Request.Builder()
-                    .url(url)
-                    .build();
+            String todaysPatientDataUrl = "https://ap-south-1.aws.webhooks.mongodb-realm.com/api/client/v2.0/app/pillminderrealm-gtzym/service/getDailyPatientData/incoming_webhook/webhook0?patientName=" + patientName + "&recordDate=" + recordDate;
+            Request todaysPatientDataRequest = new Request.Builder().url(todaysPatientDataUrl).build();
+            String weeklyPillBoxUrl = "https://ap-south-1.aws.webhooks.mongodb-realm.com/api/client/v2.0/app/pillminderrealm-gtzym/service/getWeeklyPatientPillBox/incoming_webhook/webhook0?patientName=" + patientName + "&recordWeek=" + week;
+            Request weeklyPillBoxRequest = new Request.Builder().url(weeklyPillBoxUrl).build();
 
-            Response response = null;
+            Response dailyPatientDataResponse;
+            Response weeklyPillBoxResponse;
+
             try {
-                response = client.newCall(request).execute();
-                // This the the text obtained from GET request
-                final String myResponse = response.body().string();
-                final String patient, am, pm, note;
+                final String patient, am, pm, note, recordDateOutput;
                 final JSONArray daysJSONArray;
                 final String[] daysArray;
+                final TextView[] textViewArray = new TextView[14];
 
-                final TextView[] textviewArray = new TextView[14];
+                dailyPatientDataResponse = client.newCall(todaysPatientDataRequest).execute();
+                String dailyPatientData = dailyPatientDataResponse.body().string();
+                JSONObject dailyPatientDataJsonObject = new JSONObject(dailyPatientData);
 
-                JSONObject jsonObject = new JSONObject(myResponse);
-                // Values
-                am = jsonObject.getString("am");
-                pm = jsonObject.getString("pm");
-                note = jsonObject.getString("note");
-                patient = jsonObject.getString("patient");
+                //daily data
+                patient = dailyPatientDataJsonObject.getString("patientName");
+                recordDateOutput = dailyPatientDataJsonObject.getString("recordDate");
+                am = dailyPatientDataJsonObject.getString("am");
+                pm = dailyPatientDataJsonObject.getString("pm");
+                note = dailyPatientDataJsonObject.getString("note");
 
-                daysJSONArray = jsonObject.getJSONArray("alerts");
+                //weekly data
+                weeklyPillBoxResponse = client.newCall(weeklyPillBoxRequest).execute();
+                String weeklyPillBox = weeklyPillBoxResponse.body().string();
+                JSONObject weeklyPillBoxJsonObject = new JSONObject(weeklyPillBox);
+
+                daysJSONArray = weeklyPillBoxJsonObject.getJSONArray("alerts");
                 int length = daysJSONArray.length();
                 daysArray = new String[length];
 
@@ -115,33 +132,33 @@ public class WeekView extends AppCompatActivity {
                     daysArray[i] = daysJSONArray.getString(i);
                 }
 
-                textviewArray[0] = Sunday_AM;
-                textviewArray[1] = Sunday_PM;
-                textviewArray[2] = Monday_AM;
-                textviewArray[3] = Monday_PM;
-                textviewArray[4] = Tuesday_AM;
-                textviewArray[5] = Tuesday_PM;
-                textviewArray[6] = Wednesday_AM;
-                textviewArray[7] = Wednesday_PM;
-                textviewArray[8] = Thursday_AM;
-                textviewArray[9] = Thursday_PM;
-                textviewArray[10] = Friday_AM;
-                textviewArray[11] = Friday_PM;
-                textviewArray[12] = Saturday_AM;
-                textviewArray[13] = Saturday_PM;
+                textViewArray[0] = Sunday_AM;
+                textViewArray[1] = Sunday_PM;
+                textViewArray[2] = Monday_AM;
+                textViewArray[3] = Monday_PM;
+                textViewArray[4] = Tuesday_AM;
+                textViewArray[5] = Tuesday_PM;
+                textViewArray[6] = Wednesday_AM;
+                textViewArray[7] = Wednesday_PM;
+                textViewArray[8] = Thursday_AM;
+                textViewArray[9] = Thursday_PM;
+                textViewArray[10] = Friday_AM;
+                textViewArray[11] = Friday_PM;
+                textViewArray[12] = Saturday_AM;
+                textViewArray[13] = Saturday_PM;
 
                 // Output to activity
                 WeekView.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         patientView.setText("Patient: " + patient);
-
+                        recordDateView.setText("Today: " + recordDateOutput);
                         amView.setText("AM: " + am);
                         pmView.setText("PM: " + pm);
                         notesView.setText("Note: " + note);
 
                         for (int j = 0; j < 14; j++) {
-                            populateVirtualPillBox(daysArray[j], textviewArray[j]);
+                            populateVirtualPillBox(daysArray[j], textViewArray[j]);
                         }
 
                         String s, status = "Good";
@@ -159,7 +176,7 @@ public class WeekView extends AppCompatActivity {
                         } finally {
                             if (status.equalsIgnoreCase("Bad")) {
                                 statusView.setText("Status: " + status);
-                                statusView.setTextColor(getResources().getColor(R.color.redTextColor));
+                                statusView.setTextColor(getResources().getColor(R.color.textColor));
                             } else {
                                 statusView.setText("Status: " + status);
                                 statusView.setTextColor(getResources().getColor(R.color.greenTextColor));

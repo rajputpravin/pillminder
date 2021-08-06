@@ -54,13 +54,23 @@
                 android:background="@drawable/ic_keyboard_arrow_up_white_24dp" />
 
             <TextView
-                android:id="@+id/date"
+                android:id="@+id/patient"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20sp"
                 android:layout_marginLeft="20sp"
                 android:fontFamily="@font/quicksand_medium"
-                android:text="Date:"
+                android:text="@string/patient_title"
+                android:textSize="24sp"
+                android:textColor="@color/whiteColor"/>
+            <TextView
+                android:id="@+id/recordDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20sp"
+                android:layout_marginLeft="20sp"
+                android:fontFamily="@font/quicksand_medium"
+                android:text="@string/recordDate_title"
                 android:textSize="24sp"
                 android:textColor="@color/whiteColor"/>
             <Space

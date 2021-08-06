@@ -27,6 +27,11 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import org.json.JSONObject;
 
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -34,11 +39,7 @@ import okhttp3.Response;
 public class CalendarView extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    TextView amView, pmView, notesView, dateView;
-    String url1 = "https://webhooks.mongodb-stitch.com/api/client/v2.0/app/pillbugapp-ylegd/service/addSchedule/incoming_webhook/calendar1?secret=panda";
-    String url2 = "https://webhooks.mongodb-stitch.com/api/client/v2.0/app/pillbugapp-ylegd/service/addSchedule/incoming_webhook/calendar2?secret=panda";
-    String url3 = "https://webhooks.mongodb-stitch.com/api/client/v2.0/app/pillbugapp-ylegd/service/addSchedule/incoming_webhook/calendar3?secret=panda";
-
+    TextView patientView, recordDateView, amView, pmView, notesView;
     String na = "n/a";
 
     @Override
@@ -70,31 +71,31 @@ public class CalendarView extends AppCompatActivity
         SlidingUpPanelLayout layout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout_calendar);
         layout.setAnchorPoint(0.4f);
 
+        patientView = (TextView) findViewById(R.id.patient);
+        recordDateView = (TextView) findViewById(R.id.recordDate);
         amView = (TextView) findViewById(R.id.am);
         pmView = (TextView) findViewById(R.id.pm);
         notesView = (TextView) findViewById(R.id.notes);
-        dateView = (TextView) findViewById(R.id.date);
 
         MaterialCalendarView calendarView = findViewById(R.id.calendarView1);
+
+        String patientName = "Jack";
 
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-                if (date.getYear() == 2021 && date.getMonth() + 1 == 9) {
-                    if (date.getDay() == 6) {
-                        //Log.w("LOL", "got the 4/8");
-                        new CalendarView.OkHttpAync().execute(CalendarView.this.getApplicationContext(), "get", url3);
-                        Toast.makeText(CalendarView.this, "Success!", Toast.LENGTH_SHORT).show();
-                    } else if (date.getDay() == 7) {
-                        new CalendarView.OkHttpAync().execute(CalendarView.this.getApplicationContext(), "get", url2);
-                        Toast.makeText(CalendarView.this, "Success!", Toast.LENGTH_SHORT).show();
-                    } else if (date.getDay() == 8) {
-                        new CalendarView.OkHttpAync().execute(CalendarView.this.getApplicationContext(), "get", url1);
-                        Toast.makeText(CalendarView.this, "Success!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(CalendarView.this, "Not Available", Toast.LENGTH_SHORT).show();
-                        new CalendarView.OkHttpAync().execute(CalendarView.this.getApplicationContext(), "na", na);
-                    }
+                if (date.getYear() == 2021 && date.getMonth() == 8) {
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    Calendar cal = Calendar.getInstance();
+                    cal.set(Calendar.MONTH, date.getMonth());
+                    cal.set(Calendar.YEAR, date.getYear());
+                    cal.set(Calendar.DAY_OF_MONTH, date.getDay());
+                    cal.add(Calendar.MONTH, -1);
+                    Date date1 = new Date(cal.getTime().getTime());
+                    String recordDate = dateFormat.format(date1);
+                    String todaysPatientDataUrl = "https://ap-south-1.aws.webhooks.mongodb-realm.com/api/client/v2.0/app/pillminderrealm-gtzym/service/getDailyPatientData/incoming_webhook/webhook0?patientName=" + patientName + "&recordDate=" + recordDate;
+                    new CalendarView.OkHttpAync().execute(CalendarView.this.getApplicationContext(), "get", todaysPatientDataUrl);
+                    Toast.makeText(CalendarView.this, "Success!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(CalendarView.this, "Not Available", Toast.LENGTH_SHORT).show();
                     new CalendarView.OkHttpAync().execute(CalendarView.this.getApplicationContext(), "na", na);
@@ -191,15 +192,16 @@ public class CalendarView extends AppCompatActivity
                     .url(url)
                     .build();
 
-            Response response = null;
+            Response response;
             try {
                 response = client.newCall(request).execute();
                 // This the the text obtained from GET request
                 final String myResponse = response.body().string();
-                final String am, pm, note, date;
+                final String patient, recordDate, am, pm, note;
                 JSONObject jsonObject = new JSONObject(myResponse);
                 // Values
-                date = jsonObject.getString("date");
+                patient = jsonObject.getString("patientName");
+                recordDate = jsonObject.getString("recordDate");
                 am = jsonObject.getString("am");
                 pm = jsonObject.getString("pm");
                 note = jsonObject.getString("note");
@@ -207,13 +209,14 @@ public class CalendarView extends AppCompatActivity
                 CalendarView.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        patientView.setText("Patient: " + patient);
+                        recordDateView.setText("Date: " + recordDate);
                         amView.setText("AM: " + am);
                         pmView.setText("PM: " + pm);
                         notesView.setText("Note: " + note);
-                        dateView.setText("Date: " + date);
                     }
                 });
-                return am;
+                return patient;
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -229,10 +232,11 @@ public class CalendarView extends AppCompatActivity
             CalendarView.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    patientView.setText("Patient: " + na);
+                    recordDateView.setText("Date: " + na);
                     amView.setText("AM: " + na);
                     pmView.setText("PM: " + na);
                     notesView.setText("Note: " + na);
-                    dateView.setText("Date: " + na);
                 }
             });
         } catch (Exception e) {

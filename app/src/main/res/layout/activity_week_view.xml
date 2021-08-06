@@ -64,6 +64,16 @@
                 android:textSize="24sp"
                 android:textColor="@color/whiteColor"/>
             <TextView
+                android:id="@+id/recordDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20sp"
+                android:layout_marginLeft="20sp"
+                android:fontFamily="@font/quicksand_medium"
+                android:text="@string/recordDate_title"
+                android:textSize="24sp"
+                android:textColor="@color/whiteColor"/>
+            <TextView
                 android:id="@+id/status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
