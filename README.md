@@ -21,5 +21,12 @@ Our PillMinder app always monitors the pillbox which contains the medicines orga
 ![alt text](https://github.com/rajputpravin/pillminder/blob/master/artifacts/pullUpNotification.PNG?raw=true)
 ![alt text](https://github.com/rajputpravin/pillminder/blob/master/artifacts/sideMenuView.PNG?raw=true)
 
+## What's next: The Smarter PillBox
+- More efficient Algorithms can be used to detect and analyze the type and number of pills 
+
+- This model can be extended to be used in different type of Pillboxes
+
+- Further analysis of data can de done to find any patterns that will help us understand patient’s behavior
+
 
 
